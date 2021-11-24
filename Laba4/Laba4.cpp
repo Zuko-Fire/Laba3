@@ -68,49 +68,49 @@ public:
 	}
 	void Shape::Rotate (int degree, double x, double y )
 	{
-		float a = degree * PI / 180; //переводим в радианы 
-
-		float X, Y; //повернутые коор-ты углов фигуры 
+		double a = degree * PI / 180; //переводим в радианы 
 
 
 
-		X = (arc[0].x - x) * cos(a) - (arc[0].y - y) * sin(a);
-
-		Y = (arc[0].x - x) * sin(a) + (arc[0].y - y) * cos(a);
-
-		cout << "x1=" << X + x << endl;
-
-		cout << "y1=" << Y + y << endl;
 
 
+		arc[0].x = (arc[0].x - x) * cos(a) - (arc[0].y - y) * sin(a);
 
-		X = (arc[1].x - x) * cos(a) - (arc[1].y - y) * sin(a);
+		arc[0].y = (arc[0].x - x) * sin(a) + (arc[0].y - y) * cos(a);
 
-		Y = (arc[1].x - x) * sin(a) + (arc[1].y - y) * cos(a);
+		cout << "x1=" << arc[0].x + x << endl;
 
-		cout << "x2=" << X + x << endl;
-
-		cout << "y2=" << Y + y << endl;
+		cout << "y1=" << arc[0].y + y << endl;
 
 
 
-		X = (arc[2].x - x) * cos(a) - (arc[2].y - y) * sin(a);
+		arc[1].x = (arc[1].x - x) * cos(a) - (arc[1].y - y) * sin(a);
 
-		Y = (arc[2].x - x) * sin(a) + (arc[2].y - y) * cos(a);
+		arc[1].y = (arc[1].x - x) * sin(a) + (arc[1].y - y) * cos(a);
 
-		cout << "x3=" << X + x << endl;
+		cout << "x2=" << arc[1].x + x << endl;
 
-		cout << "y3=" << Y + y << endl;
+		cout << "y2=" << arc[1].y + y << endl;
 
 
 
-		X = (arc[3].x - x) * cos(a) - (arc[3].y - y) * sin(a);
+		arc[2].x = (arc[2].x - x) * cos(a) - (arc[2].y - y) * sin(a);
 
-		Y = (arc[3].x - x) * sin(a) + (arc[3].x - y) * cos(a);
+		arc[2].y = (arc[2].x - x) * sin(a) + (arc[2].y - y) * cos(a);
 
-		cout << "x4=" << X + x << endl;
+		cout << "x3=" << arc[2].x + x << endl;
 
-		cout << "y4=" << Y + y << endl;
+		cout << "y3=" << arc[2].y + y << endl;
+
+
+
+		arc[3].x = (arc[3].x - x) * cos(a) - (arc[3].y - y) * sin(a);
+
+		arc[3].y = (arc[3].x - x) * sin(a) + (arc[3].x - y) * cos(a);
+
+		cout << "x4=" << arc[3].x + x << endl;
+
+		cout << "y4=" << arc[3].y + y << endl;
 	}
 	~Square() 
 	{ 
@@ -170,49 +170,49 @@ class Rectangle : public Shape
 	}
 	void Shape::Rotate(int degree, double x, double y)
 	{
-		float a = degree * PI / 180; //переводим в радианы 
+		double a = degree * PI / 180; //переводим в радианы 
 
-		float X, Y; //повернутые коор-ты углов фигуры 
-
-
-
-		X = (arc[0].x - x) * cos(a) - (arc[0].y - y) * sin(a);
-
-		Y = (arc[0].x - x) * sin(a) + (arc[0].y - y) * cos(a);
-
-		cout << "x1=" << X + x << endl;
-
-		cout << "y1=" << Y + y << endl;
+		
 
 
 
-		X = (arc[1].x - x) * cos(a) - (arc[1].y - y) * sin(a);
+		arc[0].x = (arc[0].x - x) * cos(a) - (arc[0].y - y) * sin(a);
 
-		Y = (arc[1].x - x) * sin(a) + (arc[1].y - y) * cos(a);
+		arc[0].y = (arc[0].x - x) * sin(a) + (arc[0].y - y) * cos(a);
 
-		cout << "x2=" << X + x << endl;
+		cout << "x1=" << arc[0].x + x << endl;
 
-		cout << "y2=" << Y + y << endl;
-
-
-
-		X = (arc[2].x - x) * cos(a) - (arc[2].y - y) * sin(a);
-
-		Y = (arc[2].x - x) * sin(a) + (arc[2].y - y) * cos(a);
-
-		cout << "x3=" << X + x << endl;
-
-		cout << "y3=" << Y + y << endl;
+		cout << "y1=" << arc[0].y + y << endl;
 
 
 
-		X = (arc[3].x - x) * cos(a) - (arc[3].y - y) * sin(a);
+		arc[1].x = (arc[1].x - x) * cos(a) - (arc[1].y - y) * sin(a);
 
-		Y = (arc[3].x - x) * sin(a) + (arc[3].x - y) * cos(a);
+		arc[1].y = (arc[1].x - x) * sin(a) + (arc[1].y - y) * cos(a);
 
-		cout << "x4=" << X + x << endl;
+		cout << "x2=" << arc[1].x + x << endl;
 
-		cout << "y4=" << Y + y << endl;
+		cout << "y2=" << arc[1].y + y << endl;
+
+
+
+		arc[2].x = (arc[2].x - x) * cos(a) - (arc[2].y - y) * sin(a);
+
+		arc[2].y = (arc[2].x - x) * sin(a) + (arc[2].y - y) * cos(a);
+
+		cout << "x3=" << arc[2].x + x << endl;
+
+		cout << "y3=" << arc[2].y + y << endl;
+
+
+
+		arc[3].x = (arc[3].x - x) * cos(a) - (arc[3].y - y) * sin(a);
+
+		arc[3].y = (arc[3].x - x) * sin(a) + (arc[3].x - y) * cos(a);
+
+		cout << "x4=" << arc[3].x + x << endl;
+
+		cout << "y4=" << arc[3].y + y << endl;
 	}
 	~Rectangle()
 	{
@@ -234,21 +234,22 @@ Shape* Shape::createShape(char cd)
 	return sh;
 }
 class Operat
-{	public:
-	void Compare_Areas(Shape a,Shape b )
+{
+public:
+	void Compare_Areas(Shape& a, Shape& b)
 	{
 		if (a.getArea() > b.getArea())
 			cout << "Фигура с Id " << a.Id << "Больше по площади" << endl;
-		if (a.getArea()< b.getArea())
+		if (a.getArea() < b.getArea())
 			cout << "Фигура с Id " << b.Id << "Больше по площади" << endl;
 		if (a.getArea() == b.getArea())
 			cout << "Фигуры равны по площади" << endl;
 	}
 	void IsIntersect()
 	{
-	
+
 	}
-}
+};
 int main()
 {
 	setlocale(LC_ALL, "Russian");
