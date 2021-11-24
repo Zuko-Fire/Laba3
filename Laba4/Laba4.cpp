@@ -236,17 +236,33 @@ Shape* Shape::createShape(char cd)
 class Operat
 {
 public:
-	void Compare_Areas(Shape& a, Shape& b)
+	void Compare_Areas(Shape* a, Shape* b)
 	{
-		if (a.getArea() > b.getArea())
-			cout << "Фигура с Id " << a.Id << "Больше по площади" << endl;
-		if (a.getArea() < b.getArea())
-			cout << "Фигура с Id " << b.Id << "Больше по площади" << endl;
-		if (a.getArea() == b.getArea())
+		if (a->getArea() > b->getArea())
+			cout << "Фигура с Id " << a->Id << "Больше по площади" << endl;
+		if (a->getArea() < b->getArea())
+			cout << "Фигура с Id " << b->Id << "Больше по площади" << endl;
+		if (a->getArea() == b->getArea())
 			cout << "Фигуры равны по площади" << endl;
 	}
-	void IsIntersect()
+	double Max(double a1,double a2,double a3,double a4)
 	{
+		return max(a1, max(a2, max(a3, a4)));
+	}
+	double Min(double a1, double a2, double a3, double a4)
+	{
+		return min(a1, min(a2, min(a3, a4)));
+	}
+	void IsIntersect(Shape* a1, Shape* a2)
+	{
+		double minXA1, maxXA1, minXA2, maxXA2;
+
+		double minYA1, maxYA1, minYA2, maxYA2;
+
+		bool res = false;
+		minXA1 = Min(a1->arc[0].x, a1->arc[1].x, a1->arc[2].x, a1->arc[3].x);
+		minXA2 = Min(a2->arc[0].x, a2->arc[1].x, a2->arc[2].x, a2->arc[3].x);
+
 
 	}
 };
@@ -257,6 +273,9 @@ int main()
 	char T;
 	cout << "Тип? ";
 	cin >> T;
+	Shape* p2 = 0;
+	Operat oper;
+	oper.Compare_Areas(p1, p2);
 	p1 = Shape::createShape(T);
 	if (!p1) return 0;
 	p1->info();
