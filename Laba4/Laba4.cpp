@@ -1,5 +1,6 @@
 ﻿#include<iostream>
 #include<cmath>
+#include <string>
 const double PI = 3.141592653589793;
 #define _USE_MATH_DEFINES
 using namespace::std;
@@ -9,7 +10,7 @@ class Shape {
 public:
 	Point* arc;
 	CenterPoint cenPoint;
-	char Id [2];
+	string Id ;
 	virtual void info() = 0;
 	virtual ~Shape() {}
 	static Shape* createShape(char);
@@ -27,7 +28,7 @@ public:
 		cout << "Квадрат" <<endl;
 		}
 	Square() {
-		cout << "Укажите уникальный id квадрата состоящий из двух символов" << endl;
+		cout << "Укажите уникальный id квадрата" << endl;
 		cin >> Id;
 		arc = new Point[4];
 		cout << "Укажите координаты (x, y) левой нижней грани" << endl;
@@ -132,7 +133,7 @@ class Rectangle : public Shape
 	}
 	Rectangle()
 	{
-		cout << "Укажите уникальный id прямоугольника состоящий из двух символов" << endl;
+		cout << "Укажите уникальный id прямоугольника" << endl;
 		cin >> Id;
 		arc = new Point[4];
 		cout << "Укажите координаты (x, y) левой нижней грани" << endl;
@@ -251,9 +252,9 @@ public:
 	{
 
 		if (a.getArea() > b.getArea())
-			cout << "Фигура с Id " << a.Id << "Больше по площади" << endl;
+			cout << "Фигура с Id " << a.Id << " Больше по площади" << endl;
 		if (a.getArea() < b.getArea())
-			cout << "Фигура с Id " << b.Id << "Больше по площади" << endl;
+			cout << "Фигура с Id " << b.Id << " Больше по площади" << endl;
 		if (a.getArea() == b.getArea())
 			cout << "Фигуры равны по площади" << endl;
 	}
@@ -336,22 +337,150 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 	Shape* p1 = 0;
-	char T;
-	cout << "Тип? ";
-	cin >> T;
-	p1 = Shape::createShape(T);
-	
-	cin >> T;
-	Shape* p2 = 0;
-	cout << "Тип? ";
-	cin >> T;
-	p2 = Shape::createShape(T);
 	Operat oper;
-	oper.Compare_Areas(*p1, *p2);
-	cout << oper.IsInclude(*p1, *p2) << endl;
-	if (!p1) return 0;
-	p1->info();
-	p1->getArea();
-	delete p1;
-	return 0;
+	while (true)
+	{
+		char figur;
+
+		cout << "Введите индетификатор фигуры, которую хотите создать (S - квадрат R - прямоугольник)" << endl;
+		cin >> figur;
+		if (figur == 'S' or figur =='R')
+		{
+			p1 = Shape::createShape(figur);
+			cout << "x1 = " << p1->arc[0].x << "   y1 = " << p1->arc[0].y << endl;
+			cout << "x2 = " << p1->arc[1].x << "   y2 = " << p1->arc[1].y << endl;
+			cout << "x3 = " << p1->arc[2].x << "   y3 = " << p1->arc[2].y << endl;
+			cout << "x4 = " << p1->arc[3].x << "   y4 = " << p1->arc[3].y << endl;
+			break;
+		}
+		else
+			cout << "Вы ввели не существующую фигуру" << endl;
+	}
+	Shape* p2 = 0;
+	while (true)
+	{
+		char figur;
+
+		cout << "Введите индетификатор фигуры, которую хотите создать (S - квадрат R - прямоугольник)" << endl;
+		cin >> figur;
+		if (figur == 'S' or figur == 'R')
+		{
+			p2 = Shape::createShape(figur);
+			cout << "x1 = " << p2->arc[0].x << "   y1 = " << p2->arc[0].y << endl;
+			cout << "x2 = " << p2->arc[1].x << "   y2 = " << p2->arc[1].y << endl;
+			cout << "x3 = " << p2->arc[2].x << "   y3 = " << p2->arc[2].y << endl;
+			cout << "x4 = " << p2->arc[3].x << "   y4 = " << p2->arc[3].y << endl;
+
+
+			break;
+		}
+		else
+			cout << "Вы ввели не существующую фигуру" << endl;
+	}
+	while (true)
+	{
+		int i = 0;
+		cout << "1.Перемещение" << endl;
+		cout << "2.Вращение" << endl;
+		cout << "3.Сравнить по площади" << endl;
+		cout << "4.Пересекаются ли фигуры" << endl;
+		cout << "5.Содержит ли одна фигура другую" << endl;
+		cout << "6.выйти" << endl;
+		cin >> i;
+		switch (i)
+		{
+		case(1):
+		{	string a;
+		cout << "Введите индетификатор фигуры" << endl;
+		cin >> a;
+		if (a == (p1->Id))
+		{
+			double x, y;
+			cout << "Введите координаты смещения (x, y)" << endl;
+			cin >> x >> y;
+			p1->Move(x, y);
+			cout << "Координаты после смещения" << endl;
+			cout << "x1 = " << p1->arc[0].x << "   y1 = " << p1->arc[0].y << endl;
+			cout << "x2 = " << p1->arc[1].x << "   y2 = " << p1->arc[1].y << endl;
+			cout << "x3 = " << p1->arc[2].x << "   y3 = " << p1->arc[2].y << endl;
+			cout << "x4 = " << p1->arc[3].x << "   y4 = " << p1->arc[3].y << endl;
+
+		}
+		if (a == (p2->Id))
+		{
+			double x, y;
+			cout << "Введите координаты смещения (x, y)" << endl;
+			cin >> x >> y;
+			p2->Move(x, y);
+			cout << "Координаты после смещения" << endl;
+			cout << "x1 = " << p2->arc[0].x << "   y1 = " << p2->arc[0].y << endl;
+			cout << "x2 = " << p2->arc[1].x << "   y2 = " << p2->arc[1].y << endl;
+			cout << "x3 = " << p2->arc[2].x << "   y3 = " << p2->arc[2].y << endl;
+			cout << "x4 = " << p2->arc[3].x << "   y4 = " << p2->arc[3].y << endl;
+
+		}
+		else
+			cout << "Не существует фигуры с таким идентификатором" << endl;
+		break;
+		}
+		case(2):
+		{	string a;
+		cout << "Введите индетификатор фигуры" << endl;
+		cin >> a;
+		if (a == p1->Id)
+		{
+			double rt, x, y;
+			cout << "Введите градус поворота и координаты точки вращения (градус , x , y)" << endl;
+			cin >> rt >> x >> y;
+			p1->Rotate(rt, x, y);
+			cout << "Координаты после вращения" << endl;
+			cout << "x1 = " << p1->arc[0].x << "   y1 = " << p1->arc[0].y << endl;
+			cout << "x2 = " << p1->arc[1].x << "   y2 = " << p1->arc[1].y << endl;
+			cout << "x3 = " << p1->arc[2].x << "   y3 = " << p1->arc[2].y << endl;
+			cout << "x4 = " << p1->arc[3].x << "   y4 = " << p1->arc[3].y << endl;
+
+		}
+		if (a == p2->Id)
+		{
+			double rt, x, y;
+			cout << "Введите градус поворота и координаты точки вращения (градус , x , y)" << endl;
+			cin >> rt >> x >> y;
+			p1->Rotate(rt, x, y);;
+			cout << "Координаты после вращения" << endl;
+			cout << "x1 = " << p2->arc[0].x << "   y1 = " << p2->arc[0].y << endl;
+			cout << "x2 = " << p2->arc[1].x << "   y2 = " << p2->arc[1].y << endl;
+			cout << "x3 = " << p2->arc[2].x << "   y3 = " << p2->arc[2].y << endl;
+			cout << "x4 = " << p2->arc[3].x << "   y4 = " << p2->arc[3].y << endl;
+
+		}
+		}
+
+		case(3):
+		{
+			oper.Compare_Areas(*p1, *p2);
+			break;
+		}
+		case(4): 
+		{
+			if (oper.IsIntersect(*p1, *p2))
+				cout << "Да"<<endl;
+			else
+				cout << "Нет"<<endl;
+			break;
+		}
+		case(5):
+		{
+			if (oper.IsInclude(*p1, *p2))
+				cout << "Да"<<endl;
+			else
+				cout << "Нет"<<endl;
+			break;
+		}
+		case(6):
+		{
+			return 0;
+		}
+		}
+
+	}
 }
