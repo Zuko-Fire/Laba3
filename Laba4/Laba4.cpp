@@ -17,6 +17,7 @@ public:
 	virtual void Move(double x, double y) = 0;
 	virtual void Rotate(int degree, double x, double y) = 0;
 	virtual CenterPoint cal_Cen_gravity() = 0;
+	virtual double getRad() = 0;
 };
 class Square : public Shape {
 public:	
@@ -31,7 +32,7 @@ public:
 		arc = new Point[4];
 		cout << "Укажите координаты (x, y) левой нижней грани" << endl;
 		cin >> arc[0].x >> arc[0].y;
-		cout << "Укажите длину сторон" << endl;
+		cout << "Укажите длину стороны" << endl;
 		cin >> side;
 		arc[1].x = arc[0].x;
 		arc[1].y = arc[0].y + side;
@@ -111,6 +112,10 @@ public:
 		cout << "x4=" << arc[3].x + x << endl;
 
 		cout << "y4=" << arc[3].y + y << endl;
+	}
+	double Shape::getRad()
+	{
+		return sqrt(pow((side / 2) + (side / 2), 2));
 	}
 	~Square() 
 	{ 
@@ -215,8 +220,13 @@ class Rectangle : public Shape
 		cout << "y4=" << arc[3].y + y << endl;
 	}
 	~Rectangle()
+
 	{
 		delete[]arc;
+	}
+	double Shape::getRad()
+	{
+		return sqrt(pow((side1 / 2) + (side2 / 2), 2));
 	}
 };
 //Фабричный метод
@@ -234,15 +244,17 @@ Shape* Shape::createShape(char cd)
 	return sh;
 }
 class Operat
+	
 {
 public:
-	void Compare_Areas(Shape* a, Shape* b)
+	void Compare_Areas(Shape& a, Shape& b)
 	{
-		if (a->getArea() > b->getArea())
-			cout << "Фигура с Id " << a->Id << "Больше по площади" << endl;
-		if (a->getArea() < b->getArea())
-			cout << "Фигура с Id " << b->Id << "Больше по площади" << endl;
-		if (a->getArea() == b->getArea())
+
+		if (a.getArea() > b.getArea())
+			cout << "Фигура с Id " << a.Id << "Больше по площади" << endl;
+		if (a.getArea() < b.getArea())
+			cout << "Фигура с Id " << b.Id << "Больше по площади" << endl;
+		if (a.getArea() == b.getArea())
 			cout << "Фигуры равны по площади" << endl;
 	}
 	double Max(double a1,double a2,double a3,double a4)
@@ -253,19 +265,73 @@ public:
 	{
 		return min(a1, min(a2, min(a3, a4)));
 	}
-	void IsIntersect(Shape* a1, Shape* a2)
+	bool IsInclude(Shape& a1, Shape& a2)
 	{
 		double minXA1, maxXA1, minXA2, maxXA2;
 
 		double minYA1, maxYA1, minYA2, maxYA2;
 
 		bool res = false;
-		minXA1 = Min(a1->arc[0].x, a1->arc[1].x, a1->arc[2].x, a1->arc[3].x);
-		minXA2 = Min(a2->arc[0].x, a2->arc[1].x, a2->arc[2].x, a2->arc[3].x);
+		minXA1 = Min(a1.arc[0].x, a1.arc[1].x, a1.arc[2].x, a1.arc[3].x);
+		maxXA1 = Max(a1.arc[0].x, a1.arc[1].x, a1.arc[2].x, a1.arc[3].x);
+		minYA1 = Min(a1.arc[0].y, a1.arc[1].y, a1.arc[2].y, a1.arc[3].y);
+		maxYA1 = Max(a1.arc[0].y, a1.arc[1].y, a1.arc[2].y, a1.arc[3].y);
+
+		minXA2 = Min(a2.arc[0].x, a2.arc[1].x, a2.arc[2].x, a2.arc[3].x);
+		maxXA2 = Max(a2.arc[0].x, a2.arc[1].x, a2.arc[2].x, a2.arc[3].x);
+		minYA2 = Min(a2.arc[0].y, a2.arc[1].y, a2.arc[2].y, a2.arc[3].y);
+		maxYA2 = Max(a2.arc[0].y, a2.arc[1].y, a2.arc[2].y, a2.arc[3].y);
+		bool result = false;
+		if ((minXA2 >= minXA1) && (minYA2 >= minYA1) &&
+
+			(maxXA2 <= maxXA1) && (maxYA2 <= maxYA1)
+
+			)
+
+			result = true;
+
+		else
+
+			if ((minXA1 >= minXA2) && (minYA1 >= minYA2) &&
+
+				(maxXA1 <= maxXA2) && (maxYA1 <= maxYA2)
+
+				)
+
+				result = true;
+
+
+
+		return result;
 
 
 	}
+	bool IsIntersect(Shape& a, Shape& b)
+
+	{
+
+		
+
+		double dist;      //растояние между центрами фигур 
+
+		double c1, c2;    //катеты для гипотенузы dist 
+
+
+
+	
+
+		c1 = fabs(a.cenPoint.x - b.cenPoint.x);
+
+		c2 = fabs(a.cenPoint.y - b.cenPoint.y);
+
+		dist = sqrt(c1 * c1 + c2 * c2);
+
+		return (dist <= (a.getRad() + b.getRad()));//считаем касание пересечением (1 общая точка) 
+
+	}//IsInterse
+
 };
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
@@ -273,10 +339,16 @@ int main()
 	char T;
 	cout << "Тип? ";
 	cin >> T;
-	Shape* p2 = 0;
-	Operat oper;
-	oper.Compare_Areas(p1, p2);
 	p1 = Shape::createShape(T);
+	
+	cin >> T;
+	Shape* p2 = 0;
+	cout << "Тип? ";
+	cin >> T;
+	p2 = Shape::createShape(T);
+	Operat oper;
+	oper.Compare_Areas(*p1, *p2);
+	cout << oper.IsInclude(*p1, *p2) << endl;
 	if (!p1) return 0;
 	p1->info();
 	p1->getArea();
