@@ -33,17 +33,30 @@ public:
 		arc = new Point[4];
 		cout << "Укажите координаты (x, y) левой нижней грани" << endl;
 		cin >> arc[0].x >> arc[0].y;
-		cout << "Укажите длину стороны" << endl;
-		cin >> side;
-		arc[1].x = arc[0].x;
-		arc[1].y = arc[0].y + side;
-		arc[2].x = arc[0].x + side;
-		arc[2].y = arc[1].y;
-		arc[3].x = arc[2].x;
-		arc[3].y = arc[0].y;
-		cenPoint.x = arc[2].x / 2;
-		cenPoint.y = arc[2].y / 2;
-		
+		try
+		{
+			cout << "Укажите длину стороны" << endl;
+			cin >> side;
+			if (side == 0)throw 1;
+			abs(side);
+			arc[1].x = arc[0].x;
+			arc[1].y = arc[0].y + side;
+
+			arc[2].x = arc[0].x + side;
+			arc[2].y = arc[1].y;
+
+			arc[3].x = arc[2].x;
+			arc[3].y = arc[0].y;
+
+			cenPoint.x = arc[2].x / 2;
+			cenPoint.y = arc[2].y / 2;
+		}
+		catch (int e)
+		{
+			cout << "Ошибка! вы ввели не верную динуну стороны: " << side << endl;
+			return;
+		}
+			
 	}
 	double getArea() 
 	{ 
@@ -59,12 +72,16 @@ public:
 	{
 		arc[0].x += x;
 		arc[0].y += y;
+		
 		arc[1].x += x;
 		arc[1].y += y;
+		
 		arc[2].x += x;
 		arc[2].y += y;
+		
 		arc[3].x += x;
 		arc[3].y += y;
+		
 		cenPoint.x += x;
 		cenPoint.y += y;
 	}
@@ -138,10 +155,27 @@ class Rectangle : public Shape
 		arc = new Point[4];
 		cout << "Укажите координаты (x, y) левой нижней грани" << endl;
 		cin >> arc[0].x >> arc[0].y;
-		cout << "Укажите длину ширину" << endl;
-		cin >> side1;
-		cout << "Укажите длину" << endl;
-		cin >> side2;
+		try
+		{
+			cout << "Укажите ширину" << endl;
+			cin >> side1;
+			if (side1 == 0) throw 1;
+			abs(side1);
+			cout << "Укажите длину" << endl;
+			cin >> side2;
+			if (side2 == 0)throw 2;
+			abs(side2);
+		}
+		catch(int e)
+		{
+			if(e == 1)
+			
+				cout << "Ошибка! вы ввели не верную ширину: " << e << endl;
+			
+			if(e == 2)
+				cout << "Ошибка! вы ввели не верную длину: " << e << endl;
+			return;
+		}
 		arc[1].x = arc[0].x;
 		arc[1].y = arc[0].y + side1;
 		arc[2].x = arc[0].x + side2;
@@ -149,7 +183,7 @@ class Rectangle : public Shape
 		arc[3].x = arc[2].x;
 		arc[3].y = arc[0].y;
 		cenPoint.x = arc[2].x / 2;
-		cenPoint.y = arc[2].y / 2;
+		cenPoint.y = arc[2].y / 2;			
 	}
 	double getArea()
 	{
@@ -176,7 +210,7 @@ class Rectangle : public Shape
 	}
 	void Shape::Rotate(int degree, double x, double y)
 	{
-		double a = degree * PI / 180; //переводим в радианы 
+		double a = degree * PI / 180; 
 
 		
 
@@ -313,9 +347,9 @@ public:
 
 		
 
-		double dist;      //растояние между центрами фигур 
+		double dist;      
 
-		double c1, c2;    //катеты для гипотенузы dist 
+		double c1, c2;    
 
 
 
@@ -327,9 +361,9 @@ public:
 
 		dist = sqrt(c1 * c1 + c2 * c2);
 
-		return (dist <= (a.getRad() + b.getRad()));//считаем касание пересечением (1 общая точка) 
+		return (dist <= (a.getRad() + b.getRad()));
 
-	}//IsInterse
+	}
 
 };
 
@@ -347,11 +381,18 @@ int main()
 		if (figur == 'S' or figur =='R')
 		{
 			p1 = Shape::createShape(figur);
-			cout << "x1 = " << p1->arc[0].x << "   y1 = " << p1->arc[0].y << endl;
-			cout << "x2 = " << p1->arc[1].x << "   y2 = " << p1->arc[1].y << endl;
-			cout << "x3 = " << p1->arc[2].x << "   y3 = " << p1->arc[2].y << endl;
-			cout << "x4 = " << p1->arc[3].x << "   y4 = " << p1->arc[3].y << endl;
-			break;
+			if (p1->getArea() != 0)
+			{
+				cout << "x1 = " << p1->arc[0].x << "   y1 = " << p1->arc[0].y << endl;
+				cout << "x2 = " << p1->arc[1].x << "   y2 = " << p1->arc[1].y << endl;
+				cout << "x3 = " << p1->arc[2].x << "   y3 = " << p1->arc[2].y << endl;
+				cout << "x4 = " << p1->arc[3].x << "   y4 = " << p1->arc[3].y << endl;
+				break;
+			}
+			else
+			{
+				cout << "Вы ввели не верные параметры при создании фигуры" << endl;
+			}
 		}
 		else
 			cout << "Вы ввели не существующую фигуру" << endl;
@@ -366,14 +407,22 @@ int main()
 		if (figur == 'S' or figur == 'R')
 		{
 			p2 = Shape::createShape(figur);
-			cout << "x1 = " << p2->arc[0].x << "   y1 = " << p2->arc[0].y << endl;
-			cout << "x2 = " << p2->arc[1].x << "   y2 = " << p2->arc[1].y << endl;
-			cout << "x3 = " << p2->arc[2].x << "   y3 = " << p2->arc[2].y << endl;
-			cout << "x4 = " << p2->arc[3].x << "   y4 = " << p2->arc[3].y << endl;
+			if (p2->getArea()!=0)
+			{
+				cout << "x1 = " << p2->arc[0].x << "   y1 = " << p2->arc[0].y << endl;
+				cout << "x2 = " << p2->arc[1].x << "   y2 = " << p2->arc[1].y << endl;
+				cout << "x3 = " << p2->arc[2].x << "   y3 = " << p2->arc[2].y << endl;
+				cout << "x4 = " << p2->arc[3].x << "   y4 = " << p2->arc[3].y << endl;
 
 
-			break;
+				break;
+			}
+			else
+			{
+				cout << "Вы ввели не верные параметры при создании фигуры" << endl;
+			}
 		}
+
 		else
 			cout << "Вы ввели не существующую фигуру" << endl;
 	}
